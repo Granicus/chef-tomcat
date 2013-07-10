@@ -37,6 +37,7 @@ default['tomcat']['shutdown_wait'] = '5'
 default["tomcat"]["use_security_manager"] = false
 default["tomcat"]["user"] = "tomcat#{version}"
 default["tomcat"]["group"] = "tomcat#{version}"
+default["tomcat"]["http_header_size"] = 262144
 default["tomcat"]["http_port"] = 8080
 default["tomcat"]["ssl_port"] = 8443
 default["tomcat"]["ajp_port"] = 8009

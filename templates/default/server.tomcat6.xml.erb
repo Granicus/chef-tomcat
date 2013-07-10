@@ -75,6 +75,7 @@
     <Connector port="<%= @tomcat.http_port.to_s %>"
               protocol="HTTP/1.1" 
               connectionTimeout="20000" 
+              maxHttpHeaderSize="<%= @tomcat.http_header_size.to_s %>"
                URIEncoding="UTF-8"
               redirectPort="<%= @tomcat.ssl_port.to_s %>" />
     <!-- A "Connector" using the shared thread pool-->
