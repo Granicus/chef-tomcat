@@ -35,6 +35,11 @@ directory "/usr/local/tomcat" do
   owner node['tomcat']['user']
 end
 
+execute "remove_default_tomcat_apps" do
+  command "rm -rf #{node["tomcat"]["home"]}/webapps/*"
+  action :nothing
+end
+
 ark tomcat_version do
   url node['tomcat'][version]['url']
   checksum node['tomcat'][version]['checksum']
@@ -42,6 +47,7 @@ ark tomcat_version do
   path  "/usr/local/tomcat"
   home_dir node['tomcat']['home']
   owner node['tomcat']['user']
+  notifies :run, "execute[remove_default_tomcat_apps]", :immediately
 end
 
 init_script = template tomcat_version do
@@ -55,7 +61,8 @@ end
 
 service tomcat_version do
   supports :restart => true, :reload => true, :status => true
-  action [:enable, :start]
+  action [:enable]
+  notifies :start, "service[#{tomcat_version}]", :delayed
 end
 
 template "/etc/default/#{tomcat_version}" do
@@ -64,6 +71,6 @@ template "/etc/default/#{tomcat_version}" do
   group "root"
   variables(:tomcat => node['tomcat'].to_hash)
   mode "0644"
-  notifies :restart, "service[#{tomcat_version}]", :immediately
+  notifies :restart, "service[#{tomcat_version}]", :delayed
 end
 
