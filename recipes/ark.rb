@@ -22,12 +22,12 @@ include_recipe "ark"
 
 version = node['tomcat']['version'].to_s
 tomcat_version = "tomcat#{node['tomcat']['version'].to_s}"
-distro = "debian"
 
-# the sysv init script requires an additional package
-if platform? [ "centos","redhat","fedora"]
-  distro = "el"
-end
+distro = value_for_platform_family(
+  'fedora' => 'el',
+  'rhel' => 'el',
+  'default' => 'debian',
+)
 
 user node['tomcat']['user']
 
