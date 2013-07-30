@@ -46,9 +46,9 @@ default["tomcat"]["unpack_wars"] = true
 default["tomcat"]["auto_deploy"] = true
 
 # all the *_opts are later combined into JAVA_OPTS
-default["tomcat"]["jvm_opts"] = ["-Xmx128M", "-Djava.awt.headless=true"]
+default["tomcat"]["jvm_opts"] = ["-Xmx1536M", "-Djava.awt.headless=true", "-server", "-noverify", "-Xshare:off", "-XX:MaxPermSize=256M", "-XX:PermSize=128M", "-XX:+UseParallelGC"]
 default["tomcat"]["jmx_opts"] = []
-default["tomcat"]["webapp_opts"] = []
+default["tomcat"]["webapp_opts"] = ["-Djava.net.preferIPv4Stack=true"]
 default["tomcat"]["more_opts"] = []
 
 # urls for arks and sha256 checksum for each
