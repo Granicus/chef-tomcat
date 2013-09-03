@@ -36,7 +36,7 @@ directory "/usr/local/tomcat" do
 end
 
 execute "remove_default_tomcat_apps" do
-  command "rm -rf #{node["tomcat"]["home"]}/webapps/*"
+  command "rm -rf #{node["tomcat"]["home"]}/webapps/ROOT.war #{node["tomcat"]["home"]}/webapps/manager.war"
   action :nothing
 end
 
